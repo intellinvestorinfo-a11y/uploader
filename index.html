@@ -1,9 +1,39 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Intelligent Investor Uploader</title>
-<style>body{font-family:Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 16px;line-height:1.6;color:#222}</style></head>
+<style>
+body{font-family:Arial,sans-serif;max-width:760px;margin:40px auto;padding:0 16px;line-height:1.6;color:#222}
+.btn{display:inline-block;background:#fe2c55;color:#fff;text-decoration:none;padding:12px 22px;border-radius:6px;font-weight:bold;font-size:17px}
+.note{background:#f2f2f2;padding:12px 14px;border-radius:6px;margin:18px 0}
+</style></head>
 <body>
 <h1>Intelligent Investor Uploader</h1>
 <p>A personal tool that uploads the owner's own educational finance videos to the owner's own TikTok account.</p>
+
+<h2>How it works</h2>
+<ol>
+<li>The owner clicks <b>Connect TikTok</b> and approves access to his own account (profile name, and permission to upload and post his videos).</li>
+<li>TikTok returns him to this site, which shows a login code.</li>
+<li>The owner pastes that code into his uploader tool, which then shows the connected account's name and sends his finished video and caption to TikTok.</li>
+</ol>
+
+<p><a class="btn" id="connect" href="#">Connect TikTok</a></p>
+<div class="note">Permissions requested: <b>user.info.basic</b> (shows the connected account's name),
+<b>video.upload</b> and <b>video.publish</b> (sends the owner's own video and caption to his own account).</div>
+
 <ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Service</a></li></ul>
+
+<script>
+(function () {
+  var CLIENT_KEY = "sbawrh49qiazmuj47f";   // sandbox client key (public by design, not a secret)
+  var REDIRECT = "https://intellinvestorinfo-a11y.github.io/uploader/callback.html";
+  var state = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  try { sessionStorage.setItem("tt_state", state); } catch (e) {}
+  var url = "https://www.tiktok.com/v2/auth/authorize/?client_key=" + encodeURIComponent(CLIENT_KEY) +
+    "&scope=" + encodeURIComponent("user.info.basic,video.upload,video.publish") +
+    "&response_type=code&redirect_uri=" + encodeURIComponent(REDIRECT) +
+    "&state=" + encodeURIComponent(state);
+  document.getElementById("connect").href = url;
+})();
+</script>
 </body></html>
